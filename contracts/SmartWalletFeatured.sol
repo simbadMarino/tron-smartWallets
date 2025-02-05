@@ -55,51 +55,72 @@ TO-DO:
 
 */
 
+// Define an interface for TRC20 tokens (similar to ERC20 in Ethereum)
 interface ITRC20 {
+    // Function to transfer tokens to a recipient
     function transfer(
         address recipient,
         uint256 amount
     ) external returns (bool);
 
+    // Function to check the token balance of a given account
     function balanceOf(address account) external view returns (uint256);
 }
 
+// Smart contract for a more advanced smart wallet
 contract SmartWalletFeatured {
+    // Address of the wallet's owner
     address public owner;
+
+    // Events to log different actions in the contract
     event TransferFailed(address _hotWallet, uint256 withdrawAmount);
     event TransferSuccess(address _hotWallet, uint256 withdrawAmount);
     event TRXWithdrawn(address indexed recipient, uint256 amount);
 
+    // Modifier to restrict certain functions to only the contract owner
     modifier onlyOwner() {
         require(msg.sender == owner, "Only owner may call function");
         _;
     }
 
+    // Constructor sets the contract deployer as the owner
     constructor() {
         owner = payable(msg.sender);
     }
 
+    // Function to withdraw all TRC20 tokens (except a small remainder) to a hot wallet
     function withdrawToMainWallet(
-        address _trc20Token,
-        address _hotWallet
+        address _trc20Token, // Address of the TRC20 token contract
+        address _hotWallet // Address where funds will be transferred
     ) external onlyOwner {
+        // Only the owner can call this function
         ITRC20 trc20Token = ITRC20(_trc20Token);
-        uint256 smartWalletBalance = trc20Token.balanceOf(address(this));
-        bool success = trc20Token.transfer(_hotWallet, smartWalletBalance - 1); //Transfer ALL balance but a minimum amount of the TRC20 token so its cheaper to deposit for users next time. This must effectively prevent the wallet to reach a 0 balance
 
+        // Get the current balance of the token in this smart contract
+        uint256 smartWalletBalance = trc20Token.balanceOf(address(this));
+
+        // Transfer all but 1 unit of the token to prevent the wallet from reaching zero balance
+        bool success = trc20Token.transfer(_hotWallet, smartWalletBalance - 1);
+
+        // Emit events based on the success of the transfer
         if (!success) {
             emit TransferFailed(_hotWallet, smartWalletBalance);
-        } else emit TransferSuccess(_hotWallet, smartWalletBalance);
+        } else {
+            emit TransferSuccess(_hotWallet, smartWalletBalance);
+        }
     }
 
+    // Function to withdraw TRX (native TRON currency) from the wallet to a specified address
     function withdrawTRX(
-        uint256 amount,
-        address payable _address
+        uint256 amount, // Amount of TRX to withdraw
+        address payable _address // Recipient's address
     ) external onlyOwner {
+        // Only the owner can call this function
         _address.transfer(amount);
         emit TRXWithdrawn(owner, amount);
     }
 
+    // Function to change the owner of the contract
     function changeOwner(address _newOwnerAddress) external onlyOwner {
         owner = _newOwnerAddress;
     }

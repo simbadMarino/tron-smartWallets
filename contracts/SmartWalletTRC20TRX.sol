@@ -53,47 +53,65 @@ TO-DO:
 
 */
 
+// Define an interface for TRC20 tokens (similar to ERC20 in Ethereum)
 interface ITRC20 {
+    // Function to transfer tokens to a recipient
     function transfer(
         address recipient,
         uint256 amount
     ) external returns (bool);
 }
 
+// Smart contract for handling TRC20 token and TRX transactions
 contract SmartWalletTRC20TRX {
+    // Address of the contract owner
     address public owner;
 
+    // Events to log transfer results and TRX withdrawals
     event TransferFailed(address _hotWallet, uint256 withdrawAmount);
     event TransferSuccess(address _hotWallet, uint256 withdrawAmount);
     event TRXWithdrawn(address indexed recipient, uint256 amount);
 
+    // Modifier to restrict function access to only the contract owner
     modifier onlyOwner() {
         require(msg.sender == owner, "Only owner may call function");
         _;
     }
 
+    // Constructor sets the contract deployer as the owner
     constructor() {
         owner = payable(msg.sender);
     }
 
+    // Function to withdraw TRC20 tokens from the contract to a hot wallet
     function withdrawToMainWallet(
-        address _trc20Token,
-        address _hotWallet,
-        uint256 _smartWalletBalance
+        address _trc20Token, // Address of the TRC20 token contract
+        address _hotWallet, // Destination address for withdrawal
+        uint256 _smartWalletBalance // Amount of tokens to withdraw
     ) external onlyOwner {
+        // Only the owner can call this function
         ITRC20 trc20Token = ITRC20(_trc20Token);
+
+        // Attempt to transfer the specified amount of tokens
         bool success = trc20Token.transfer(_hotWallet, _smartWalletBalance);
 
+        // Emit appropriate event based on the transfer success or failure
         if (!success) {
             emit TransferFailed(_hotWallet, _smartWalletBalance);
-        } else emit TransferSuccess(_hotWallet, _smartWalletBalance);
+        } else {
+            emit TransferSuccess(_hotWallet, _smartWalletBalance);
+        }
     }
 
+    // Function to withdraw TRX (native TRON currency) from the contract
     function withdrawTRX(
-        uint256 amount,
-        address payable _address
+        uint256 amount, // Amount of TRX to withdraw
+        address payable _address // Address to receive the TRX
     ) external onlyOwner {
+        // Only the owner can call this function
         _address.transfer(amount);
+
+        // Emit an event for tracking the withdrawal
         emit TRXWithdrawn(owner, amount);
     }
 }

@@ -52,39 +52,53 @@ TO-DO:
 
 */
 
+// Define an interface for TRC20 tokens (similar to ERC20 in Ethereum)
 interface ITRC20 {
+    // Function to transfer tokens from the contract to another address
     function transfer(
         address recipient,
         uint256 amount
     ) external returns (bool);
 }
 
+// Smart contract for a simple smart wallet
 contract SimpleSmartWallet {
+    // Address of the wallet's owner
     address public owner;
-    //ITRC20 internal trc20Token;
 
+    // Events to log transfer success and failure
     event TransferFailed(address _hotWallet, uint256 withdrawAmount);
     event TransferSuccess(address _hotWallet, uint256 withdrawAmount);
 
+    // Modifier to restrict certain functions to only the contract owner
     modifier onlyOwner() {
         require(msg.sender == owner, "Only owner may call function");
         _;
     }
 
+    // Constructor to initialize the owner of the contract
     constructor() {
-        owner = payable(msg.sender);
+        owner = payable(msg.sender); // Assign the deployer as the owner
     }
 
+    // Function to withdraw tokens to a specified "hot wallet"
     function withdrawToMainWallet(
-        address _trc20Token,
-        address _hotWallet,
-        uint256 _smartWalletBalance
+        address _trc20Token, // Address of the TRC20 token contract
+        address _hotWallet, // Address where funds will be transferred
+        uint256 _smartWalletBalance // Amount to transfer
     ) external onlyOwner {
+        // Only the owner can call this function
+        // Create an instance of the TRC20 token using the provided address
         ITRC20 trc20Token = ITRC20(_trc20Token);
+
+        // Attempt to transfer tokens from this contract to the hot wallet
         bool success = trc20Token.transfer(_hotWallet, _smartWalletBalance);
 
+        // Emit appropriate event based on the transfer success or failure
         if (!success) {
             emit TransferFailed(_hotWallet, _smartWalletBalance);
-        } else emit TransferSuccess(_hotWallet, _smartWalletBalance);
+        } else {
+            emit TransferSuccess(_hotWallet, _smartWalletBalance);
+        }
     }
 }
