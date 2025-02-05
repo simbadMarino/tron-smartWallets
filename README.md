@@ -18,6 +18,7 @@ So, if an EOA in TRON can even have multisign capabilities by default, why would
 
 ## Project Structure
 
+```
 .
 ├── README.md
 ├── build            //This folder holds contract build data after compiling
@@ -38,6 +39,7 @@ So, if an EOA in TRON can even have multisign capabilities by default, why would
 ├── tronbox-evm-config.js
 ├── tronbox.js      //tronbox setup file
 └── yarn.lock
+```
 
 ## Smart Wallets Contracts
 
