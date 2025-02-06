@@ -48,7 +48,7 @@ Replace current throw away EOAs model from payments platform to reduce energy de
 
 **Deployment cost:**
 
-159K energy (can be improved by implementing a Contract Factory & changing owner public storage variable to internal)
+142K energy (can be improved by implementing a Contract Factory & changing owner public storage variable to internal)
 
 **Use cases:**
 
@@ -64,7 +64,7 @@ Replace current  EOAs model for payments platforms to reduce energy delegation a
 
 **Deployment cost:** 
 
-219K energy (can be improved by implementing a Contract Factory & changing owner public storage variable to internal)
+180K energy (can be improved by implementing a Contract Factory & changing owner public storage variable to internal)
 
 **Use cases:**
 * USDT / TRC20 / TRX custodial wallets
@@ -78,7 +78,7 @@ Replace EOAs model for wallet management, reducing energy delegation and token t
 
 **Deployment cost:** 
 
-250k energy, not recommended for single use use cases.
+230k energy, not recommended for single use use cases.
 
 **Use cases:**
 
