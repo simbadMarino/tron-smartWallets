@@ -1,3 +1,4 @@
+require('dotenv').config();
 const port = process.env.HOST_PORT || 9090
 
 module.exports = {
