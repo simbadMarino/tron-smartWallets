@@ -55,7 +55,8 @@ Then, run the migration with:
       enabled: true, // default: false, true: enable solc optimize
       runs: 200
     },
-    evmVersion: 'shanghai'
+    evmVersion: 'shanghai',
+    viaIR: true               //Implement viaIR to reduce deployment costs further
   }
 
 }
