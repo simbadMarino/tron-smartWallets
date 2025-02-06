@@ -4,13 +4,10 @@ This repo is a colllection of Smart Wallet Contracts and Account Abstaction rela
 
 ### What is a Smart Wallet or Smart Contract Account?
 
-We can start by comparing a normal TRON accout, commonly known as EOA (Externally Owned Account)  vs a Smart Wallet.
-
-An EOA account is your default TRON account, which is linked to a private key or seedphrase, meaning you hold full ownership and responsability for your account resources security.
-
-A Smart Wallet is in escense  a simple Smart Contract which can hold TRX and crypto tokens and assigns a wallet manager to control certain secuirty features like asset withdrawal, ownership change, etc.
-
-So, if an EOA in TRON can even have multisign capabilities by default, why would you need a Smart Wallet?
+We can start by comparing a normal TRON account, commonly known as EOA (Externally Owned Account) vs a Smart Wallet.
+An EOA account is your default TRON account, which is linked to a private key or seed-phrase, meaning you hold full ownership and responsibility for your account resources security.
+A Smart Wallet is in essence a simple Smart Contract which can hold TRX and crypto tokens and assigns a wallet manager to control certain secuirty features like asset withdrawal, ownership change, etc.
+So, if an EOA in TRON can even have multi-sign capabilities by default, why would you need a Smart Wallet?
 
 1. **Resources Inheritance:** In TRON, the contract deployer can assign itself as a paymaster with configurable sponsorship ratio (0% to 100%)
 2. **Eliminate Account activation fixed cost:** In TRON you need 1.1 TRX to activate a need EOA, creating Smart Wallets could be free provided the contract deployer has enough energy.
@@ -45,21 +42,49 @@ So, if an EOA in TRON can even have multisign capabilities by default, why would
 
 ### Simple Smart Wallet Contract (SSWC)
 
-Goal: Reduce energy delegation and USDT transfer complexity for wallet management / payments platforms, eCommerce like Telegram Wallets, CEX or similar.
+**Goal:**
 
-Note, This Smart Wallet provides the least features to decrease deployment cost as much as possible for Single Use wallets.
+Replace current throw away EOAs model from payments platform to reduce energy delegation and token transfer complexity while keeping minimal feature set for deployment cost reduction.
+
+**Deployment cost:**
+
+159K energy (can be improved by implementing a Contract Factory & changing owner public storage variable to internal)
+
+**Use cases:**
+
+* Throw away wallets for payments
+
+* USDT / TRC20  custodial wallets
 
 ### Smart Wallet TRC20 TRX (SWTRXC)
 
-Goal: Reduce energy delegation and USDT transfer complexity for wallet management / payments platforms, eCommerce like Telegram Wallets, CEX or similar.
+**Goal:** 
 
-Note, This Smart Wallet provides the least features to decrease deployment cost as much as possible for Single Use wallets, improving security by enabling TRX withdrawals.
+Replace current  EOAs model for payments platforms to reduce energy delegation and token transfer complexity, including a TRX withdrawal feature for increased security (in case of accidental TRX deposits) and functionality.
+
+**Deployment cost:** 
+
+219K energy (can be improved by implementing a Contract Factory & changing owner public storage variable to internal)
+
+**Use cases:**
+* USDT / TRC20 / TRX custodial wallets
+* EOA replacement for non-single use use cases, limited to simple transfers
 
 ### Smart Wallet Featured (SWFEAT)
 
-Goal: Reduce energy delegation and USDT transfer complexity for wallet management / payments platforms,eCommerce like Telegram Wallets, CEX or similar while keeping a set of useful functions and features.
+**Goal:** 
 
-Note, This Smart Wallet provides the some extra convinience features to make user and bussines experience as smooth as possible for regular usage wallets.
+Replace EOAs model for wallet management, reducing energy delegation and token transfer complexity, eventually this solution could be enhanced to support ERC-4337 features.
+
+**Deployment cost:** 
+
+250k energy, not recommended for single use use cases.
+
+**Use cases:**
+
+* USDT / TRC20 / TRX custodial and non-custodial wallet management solutions.
+
+* TRON Account Abstraction solution (still need to add further features)
 
 ## Setup and Deployment
 
