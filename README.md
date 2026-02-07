@@ -1,6 +1,11 @@
 # TRON Tailored Smart Wallets
 
-This repo is a colllection of Smart Wallet Contracts and Account Abstaction related utilities tailored for TRON.
+⚠️⚠️⚠️  Notice: If you are deploying multiple smart wallets or sweeper contracts it is recommended to use TRC-1167 Minimal Proxy Contracts (tron clones) approach instead of deploying the full implementation contracts per customer/user to significantly reduce costs.
+
+For details, please check my [tron-clones](https://github.com/simbadMarino/tron-clones) repo, eventually I'll merge tron-clones into this one, for now please consider taking a look into both depending on what you are planning to build ⚠️⚠️⚠️ 
+
+
+This repo is a colllection of Smart Wallet Contracts and Account Abstaction related utilities tailored for TRON. 
 
 ### What is a Smart Wallet or Smart Contract Account?
 
