@@ -45,7 +45,7 @@ Then, run the migration with:
     },
     compilers: {
       solc: {
-        version: '0.8.20',
+        version: '0.8.31',
       }
     }
   },
@@ -53,9 +53,9 @@ Then, run the migration with:
   solc: {
     optimizer: {
       enabled: true, // default: false, true: enable solc optimize
-      runs: 200
+      runs: 10000
     },
-    evmVersion: 'shanghai',
+    evmVersion: 'osaka',
     viaIR: true               //Implement viaIR to reduce deployment costs further
   }
 

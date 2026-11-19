@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+# Check for Tron private keys
+echo "🔍 Checking for Tron private keys patterns..."
+
+# Pattern for 64 hex character strings (potential private keys)
+if git diff --cached --diff-filter=ACM | grep -iE '\b[a-fA-F0-9]{64}\b'; then
+    echo "❌ ERROR: Potential private key detected (64 hex characters)!"
+    echo "Please remove any private keys before committing."
+    exit 1
+fi
+
+# Check for common private key variable patterns
+if git diff --cached --diff-filter=ACM | grep -iE '(private_?key|secret_?key|priv_?key|wallet_?key).*[:=]'; then
+    echo "⚠️  WARNING: Found private key variable name"
+    echo "Please verify no sensitive data is being committed."
+fi
+
+echo "✅ No obvious private keys detected"
